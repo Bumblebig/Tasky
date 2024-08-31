@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit {
   doneTasks: any[] = [];
 
   ngOnInit(): void {
-    // Subscribe to the BehaviorSubject to get updated tasks
     TaskFormComponent.tasksSubject.subscribe(tasks => {
       this.newTasks = tasks.filter(task => task.status === 'New Task');
       this.inProgressTasks = tasks.filter(task => task.status === 'In Progress');
@@ -28,7 +27,6 @@ export class DashboardComponent implements OnInit {
 
   onDrop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer !== event.container) {
-      // Move task to the new list
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -36,7 +34,6 @@ export class DashboardComponent implements OnInit {
         event.currentIndex
       );
 
-      // Update the status of the moved task
       const task = event.container.data[event.currentIndex];
       if (event.container.id === 'newTasksList') {
         task.status = 'New Task';
@@ -46,7 +43,6 @@ export class DashboardComponent implements OnInit {
         task.status = 'Done';
       }
 
-      // Update the BehaviorSubject with the new task list
       TaskFormComponent.tasksSubject.next([
         ...this.newTasks,
         ...this.inProgressTasks,

@@ -1,5 +1,5 @@
-<div class="ui container">
-    <h2>Create New Task</h2>
+<div class="ui container" id="container">
+    <h1>Create New Task</h1>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="ui form">
         <div class="field">
             <label>Task Title</label>
@@ -9,8 +9,11 @@
             <label>Task Description</label>
             <textarea formControlName="description" rows="2" placeholder="Enter task description"></textarea>
         </div>
-        <button class="ui primary button" type="submit">Add Task</button>
-        <div class="ui red message {{filled}}">Enter all fields are filled and description is less than 15 characters!
+        <div class="btn-container">
+            <button class="ui primary button" type="submit" id="add-btn">Add Task</button>
+            <button class=" ui button" routerLink="/">View dashboard</button>
+        </div>
+        <div class="ui red message {{filled}}">Ensure all fields are filled and description is less than 15 characters!
         </div>
     </form>
 </div>
