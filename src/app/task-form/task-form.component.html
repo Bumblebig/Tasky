@@ -1,0 +1,16 @@
+<div class="ui container">
+    <h2>Create New Task</h2>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="ui form">
+        <div class="field">
+            <label>Task Title</label>
+            <input formControlName="title" type="text" placeholder="Enter task title">
+        </div>
+        <div class="field">
+            <label>Task Description</label>
+            <textarea formControlName="description" rows="2" placeholder="Enter task description"></textarea>
+        </div>
+        <button class="ui primary button" type="submit">Add Task</button>
+        <div class="ui red message {{filled}}">Enter all fields are filled and description is less than 15 characters!
+        </div>
+    </form>
+</div>

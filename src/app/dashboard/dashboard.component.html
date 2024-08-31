@@ -1,0 +1,51 @@
+<div class="ui container">
+    <button class="ui primary button" routerLink="/task-form" style="float: right;">Add Task</button>
+    <h2>Task Dashboard</h2>
+    <div class="ui three column grid">
+
+        <!-- New Task Column -->
+        <div class="column" cdkDropList [cdkDropListData]="newTasks"
+            [cdkDropListConnectedTo]="['inProgressList', 'doneList']" (cdkDropListDropped)="onDrop($event)"
+            id="newTasksList">
+            <h3>New Task</h3>
+            <div *ngFor="let task of newTasks" cdkDrag [cdkDragData]="task">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">{{ task.title }}</div>
+                        <div class="description">{{ task.description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="column" cdkDropList [cdkDropListData]="inProgressTasks"
+            [cdkDropListConnectedTo]="['newTasksList', 'doneList']" (cdkDropListDropped)="onDrop($event)"
+            id="inProgressList">
+            <h3>In Progress</h3>
+            <div *ngFor="let task of inProgressTasks" cdkDrag [cdkDragData]="task">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">{{ task.title }}</div>
+                        <div class="description">{{ task.description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="column" cdkDropList [cdkDropListData]="doneTasks"
+            [cdkDropListConnectedTo]="['newTasksList', 'inProgressList']" (cdkDropListDropped)="onDrop($event)"
+            id="doneList">
+            <h3>Done</h3>
+            <div *ngFor="let task of doneTasks" cdkDrag [cdkDragData]="task">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">{{ task.title }}</div>
+                        <div class="description">{{ task.description }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
