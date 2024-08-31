@@ -50,4 +50,30 @@ export class DashboardComponent implements OnInit {
       ]);
     }
   }
+
+  getHeadingColor(status: string): string {
+    switch (status) {
+      case 'New Task':
+        return '#ff6b6b';
+      case 'In Progress':
+        return '#ff9800';
+      case 'Done':
+        return '#0e7c7b';
+      default:
+        return '#000'; 
+    }
+  }
+
+  getHeadingBackgroundColor(status: string): string {
+    switch (status) {
+      case 'New Task':
+        return 'rgba(255, 107, 107, 0.16)';
+      case 'In Progress':
+        return 'rgba(255, 152, 0, 0.16)';
+      case 'Done':
+        return 'rgba(14, 124, 122, 0.16)';
+      default:
+        return 'rgba(0, 0, 0, 0.1)';
+    }
+  }
 }
