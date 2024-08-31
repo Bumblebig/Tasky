@@ -8,6 +8,11 @@
   height: 100%;
 }
 
+#container::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
 #task-column {
   padding: 10px;
   background-color: #fbfbfb;
