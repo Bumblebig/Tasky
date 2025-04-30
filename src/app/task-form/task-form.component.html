@@ -9,6 +9,16 @@
             <label>Task Description</label>
             <textarea formControlName="description" rows="2" placeholder="Enter task description"></textarea>
         </div>
+        <!-- Add Parent Task Selection Dropdown -->
+        <div class="field">
+            <label>Parent Task</label>
+            <select formControlName="parentId" class="ui dropdown">
+                <option [ngValue]="null">(New Top-Level Task)</option> <!-- Use ngValue for null -->
+                <option *ngFor="let parent of availableParents" [value]="parent.id">
+                    {{ parent.title }} (ID: {{parent.id}})
+                </option>
+            </select>
+        </div>
         <div class="btn-container">
             <button class="ui primary button" type="submit" id="add-btn">Add Task</button>
             <button class=" ui button" routerLink="/">View dashboard</button>

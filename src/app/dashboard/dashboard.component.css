@@ -49,3 +49,22 @@ h3 {
   margin-top: 5px;
   padding: 3px;
 }
+
+/* Style for nested task indentation */
+.task-children {
+  margin-left: 25px; /* Adjust value as needed */
+  /* Optional: Add a visual indicator for nesting */
+  /* border-left: 1px dashed #ccc; */
+  /* padding-left: 10px; */
+}
+
+/* Style for the expand/collapse toggle icon */
+.toggle-icon {
+  cursor: pointer;
+  margin-right: 5px; /* Adjust spacing */
+  /* Using float left to place it before the title */
+  float: left;
+  /* Ensure it aligns nicely with the header text */
+  line-height: inherit;
+  font-size: inherit; /* Inherit size from header */
+}

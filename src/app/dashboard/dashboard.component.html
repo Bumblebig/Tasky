@@ -1,58 +1,73 @@
 <div class="ui container" id="container">
     <button class="ui button" id="add-btn" routerLink="/task-form" style="float: right;">Add Task</button>
     <h1>Dashboard</h1>
+
+    <!-- Define the recursive template -->
+    <ng-template #taskItemTemplate let-task>
+        <div class="task-item-container">
+            <!-- Render the task card itself -->
+            <div class="ui card" id="card" cdkDrag [cdkDragData]="task">
+                <div class="content">
+                    <div class="header"
+                        [ngStyle]="{'color': getHeadingColor(task.status), 'background-color': getHeadingBackgroundColor(task.status)}"
+                        id="heading">
+                         <!-- Toggle Icon -->
+                         <i *ngIf="task.children && task.children.length > 0"
+                            class="icon toggle-icon"
+                            [class.chevron-down]="task.isExpanded"
+                            [class.chevron-right]="!task.isExpanded"
+                            (click)="toggleExpand(task); $event.stopPropagation();"></i>
+                        {{ task.title }} (ID: {{task.id}}) <!-- Display ID for clarity -->
+                    </div>
+                    <div class="description" id="desc">{{ task.description }}</div>
+                </div>
+                <!-- Add drag handle if needed: <div class="handle" cdkDragHandle></div> -->
+            </div>
+
+            <!-- Check for and render children, conditionally based on isExpanded -->
+            <div *ngIf="task.children && task.children.length > 0 && task.isExpanded" class="task-children">
+                <ng-container *ngFor="let child of task.children">
+                    <!-- Recursively call the template for each child -->
+                    <ng-container *ngTemplateOutlet="taskItemTemplate; context: {$implicit: child}"></ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Grid for the columns -->
     <div class="ui three column grid" id="task-column">
 
+        <!-- New Task Column -->
         <div class="column" cdkDropList [cdkDropListData]="newTasks"
             [cdkDropListConnectedTo]="['inProgressList', 'doneList']" (cdkDropListDropped)="onDrop($event)"
             id="newTasksList">
             <h3>New Task</h3>
-            <div *ngFor="let task of newTasks" cdkDrag [cdkDragData]="task">
-                <div class="ui card" id="card">
-                    <div class="content">
-                        <div class="header"
-                            [ngStyle]="{'color': getHeadingColor(task.status), 'background-color': getHeadingBackgroundColor(task.status)}"
-                            id="heading">
-                            {{ task.title }}</div>
-                        <div class="description" id="desc">{{ task.description }}</div>
-                    </div>
-                </div>
-            </div>
+            <!-- Instantiate the template for top-level tasks -->
+            <ng-container *ngFor="let task of newTasks">
+                <ng-container *ngTemplateOutlet="taskItemTemplate; context: {$implicit: task}"></ng-container>
+            </ng-container>
         </div>
 
-
+        <!-- In Progress Column -->
         <div class="column" cdkDropList [cdkDropListData]="inProgressTasks"
             [cdkDropListConnectedTo]="['newTasksList', 'doneList']" (cdkDropListDropped)="onDrop($event)"
             id="inProgressList">
             <h3>In Progress</h3>
-            <div *ngFor="let task of inProgressTasks" cdkDrag [cdkDragData]="task">
-                <div class="ui card" id="card">
-                    <div class="content">
-                        <div class="header"
-                            [ngStyle]="{'color': getHeadingColor(task.status), 'background-color': getHeadingBackgroundColor(task.status)}"
-                            id="heading">
-                            {{ task.title }}</div>
-                        <div class="description" id="desc">{{ task.description }}</div>
-                    </div>
-                </div>
-            </div>
+            <!-- Instantiate the template for top-level tasks -->
+            <ng-container *ngFor="let task of inProgressTasks">
+                <ng-container *ngTemplateOutlet="taskItemTemplate; context: {$implicit: task}"></ng-container>
+            </ng-container>
         </div>
 
+        <!-- Done Column -->
         <div class="column" cdkDropList [cdkDropListData]="doneTasks"
             [cdkDropListConnectedTo]="['newTasksList', 'inProgressList']" (cdkDropListDropped)="onDrop($event)"
             id="doneList">
             <h3>Done</h3>
-            <div *ngFor="let task of doneTasks" cdkDrag [cdkDragData]="task">
-                <div class="ui card" id="card">
-                    <div class="content">
-                        <div class="header"
-                            [ngStyle]="{'color': getHeadingColor(task.status), 'background-color': getHeadingBackgroundColor(task.status)}"
-                            id="heading">
-                            {{ task.title }}</div>
-                        <div class="description" id="desc">{{ task.description }}</div>
-                    </div>
-                </div>
-            </div>
+            <!-- Instantiate the template for top-level tasks -->
+            <ng-container *ngFor="let task of doneTasks">
+                <ng-container *ngTemplateOutlet="taskItemTemplate; context: {$implicit: task}"></ng-container>
+            </ng-container>
         </div>
     </div>
 </div>
